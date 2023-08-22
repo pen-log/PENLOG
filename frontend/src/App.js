@@ -16,6 +16,7 @@ function App() {
     <div className={`App ${ismode ? 'dark' : 'light'}`}>
       <Nav darkMode={darkMode} ismode={ismode} />
       <Routes>
+
         <Route path='/' element={<Main />} />
         <Route path='/recent' element={<Recent />} />
         <Route path='/search' element={<Search />} />
