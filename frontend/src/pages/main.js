@@ -2,7 +2,7 @@
 function Main() {
     return (
         <>
-            메인페이지임
+            메인페이지임zz
         </>
     )
 }
