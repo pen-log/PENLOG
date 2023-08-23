@@ -2,6 +2,8 @@ import { useState } from "react";
 import { AiOutlineMore, AiOutlineRise } from "react-icons/ai";
 import { BsGraphUpArrow, BsClock, BsFillSunFill, BsFillMoonFill, BsSearch } from "react-icons/bs";
 import { useLocation, useNavigate } from "react-router-dom";
+import styles from '../css/nav.module.scss';
+
 
 export default function Nav({ darkMode, ismode }) {
     const navigate = useNavigate()
@@ -12,23 +14,23 @@ export default function Nav({ darkMode, ismode }) {
     }
 
     return (<>
-        <div className="navbar">
-            <div className="nav-logo" onClick={() => navigate('/')}>
+        <div className={styles.navbar}>
+            <div className={styles.nav_logo} onClick={() => navigate('/')}>
                 Penlog
             </div>
-            <div className="nav-content">
+            <div className={styles.nav_content}>
                 <li onClick={darkMode}>
                     {ismode ? <BsFillMoonFill /> : <BsFillSunFill />}
                 </li>
                 <li>
                     <BsSearch onClick={() => navigate('/search')} />
                 </li>
-                <button className="login-btn" onClick={() => navigate('/login')}>로그인</button>
+                <button className={styles.login_btn} onClick={() => navigate('/login')}>로그인</button>
             </div>
         </div>
 
-        <div className="category">
-            <div className="category-content">
+        <div className={styles.category}>
+            <div className={styles.category_content}>
                 <li className={location.pathname === '/' ? "selected" : ""} onClick={() => navigate('/')}><AiOutlineRise /><span>트렌딩</span></li>
                 <li className={location.pathname === '/recent' ? "selected" : ""} onClick={() => navigate('/recent')}><BsClock /><span>최신</span></li>
                 <select>
@@ -38,9 +40,9 @@ export default function Nav({ darkMode, ismode }) {
                     <option value="grape">올해</option>
                 </select>
             </div>
-            <div className="category-more" >
-                <AiOutlineMore className="dropdown-icon" onClick={toggleDropdown} />
-                <div className={`dropdown-list ${isOpen ? 'active' : ''}`}>
+            <div className={styles.category_more} >
+                <AiOutlineMore className={styles.dropdown_icon} onClick={toggleDropdown} />
+                <div className={` ${styles.dropdown_list} ${isOpen ? styles.active : ''}  `}>
                     <li>공지사항</li>
                     <li>태그 목록</li>
                     <li>서비스 정책</li>
