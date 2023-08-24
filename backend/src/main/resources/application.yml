@@ -11,3 +11,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            scope: profile
+            client-name: Google
+            redirect-uri: 'http://localhost/{action}/oauth2/code/{registrationId}'
+          facebook:
+            scope:
+            client-name: Facebook
+            redirect-uri: 'http://localhost/{action}/oauth2/code/{registrationId}'
