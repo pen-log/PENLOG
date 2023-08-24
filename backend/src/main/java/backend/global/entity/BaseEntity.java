@@ -10,7 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-import static backend.global.StatusType.*;
+import static backend.global.StatusType.DELETED;
+import static backend.global.StatusType.USABLE;
 
 @Getter
 @MappedSuperclass
