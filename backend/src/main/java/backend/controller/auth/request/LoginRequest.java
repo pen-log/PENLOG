@@ -1,4 +1,4 @@
-package backend.controller.auth;
+package backend.controller.auth.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package backend.controller.auth;
+package backend.controller.auth.response;
 
 import backend.domain.member.Member;
 import lombok.Getter;

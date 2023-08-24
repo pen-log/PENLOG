@@ -1,5 +1,7 @@
 package backend.controller.auth;
 
+import backend.controller.auth.request.LoginRequest;
+import backend.controller.auth.response.LoginResponse;
 import backend.domain.member.Member;
 import backend.domain.member.dto.MemberCreateRequest;
 import backend.global.exception.BadRequestException;
