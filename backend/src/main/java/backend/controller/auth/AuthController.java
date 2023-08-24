@@ -1,14 +1,19 @@
 package backend.controller.auth;
 
 import backend.domain.member.Member;
+import backend.domain.member.dto.MemberCreateRequest;
+import backend.global.exception.BadRequestException;
 import backend.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.web.bind.annotation.*;
+
+import static backend.global.exception.ExceptionCode.MEMBER_PASSWORD_DO_NOT_MATCH;
 
 @RequiredArgsConstructor
 @RestController
@@ -45,6 +50,21 @@ public class AuthController {
         LoginResponse loginResponse = new LoginResponse().toMember(member);
 
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Void> register(@RequestBody MemberCreateRequest request) {
+        String username = request.getUsername();
+
+        if (!request.getPassword1().equals(request.getPassword2())) {
+            throw new BadRequestException(MEMBER_PASSWORD_DO_NOT_MATCH);
+        }
+
+        String password = request.getPassword1();
+
+        memberService.join(username, password);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
