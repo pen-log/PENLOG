@@ -25,14 +25,16 @@ public class Member {
 
     @Id
     @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
+    @Column(unique = true)
     private String nickname;
 
     @CreatedDate
@@ -51,6 +53,14 @@ public class Member {
         this.nickname = nickname;
         this.createdAt = LocalDateTime.now();
         this.status = MemberStatus.ACTIVE;
+    }
+
+    public Member updateMember(String password, String nickname) {
+        this.password = password;
+        this.nickname = nickname;
+        this.modifiedAt = LocalDateTime.now();
+
+        return this;
     }
 
     public List<? extends GrantedAuthority> getGrantedAuthorities() {
