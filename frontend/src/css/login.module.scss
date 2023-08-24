@@ -1,9 +1,9 @@
 .login_container {
     display: flex;
-    width: 40%;
-    margin: 0 auto;
+    width: 30%;
+    margin: 5rem auto;
     max-width: 1200px;
-    border: 1px solid grey;
+    // border: 1px solid grey;
 
     .login_left {
         width: 40%;
@@ -33,7 +33,7 @@
             width: 80%;
             margin: 0 auto;
 
-            .login_form {
+            .login_content_email {
                 display: flex;
                 border: 1px solid #12B886;
 
@@ -57,14 +57,11 @@
             }
         }
 
-        .login_content_social {
-            list-style: none;
 
-            .login_content_icon {
-                display: flex;
-                justify-content: space-around;
-                font-size: 2rem;
-            }
+        .login_content_icon {
+            display: flex;
+            justify-content: space-around;
+            font-size: 2rem;
         }
 
         .login_content_footer {
