@@ -7,7 +7,7 @@ function Main() {
     return (
         <div className={styles.main_container}>
             {data.map((a, i) => (
-                <div className={styles.main_item}>
+                <div className={styles.main_item} key={i}>
                     <img src="logo.png" onClick={() => navigate('/detail/' + i)} />
                     <div className={styles.main_info}>
                         <h4>{a.id}</h4>

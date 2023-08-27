@@ -5,3 +5,20 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+.dark {
+  color: #F8F9FA;
+  background: black;
+  transition: all 0.5s;
+
+  input {
+    background-color: black;
+    color: white;
+  }
+}
+
+.light {
+  color: black;
+  background: #F8F9FA;
+  transition: all 0.5s;
+}

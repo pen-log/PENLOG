@@ -18,9 +18,9 @@ function Login() {
                     } />
                 </div >
                 <div className={styles.login_content}>
-                    < h2 > 로그인</h2 >
+                    <h2>로그인</h2 >
+                    < h4 > 이메일로 로그인</h4 >
                     <div className={styles.login_content_email}>
-                        < h4 > 이메일로 로그인</h4 >
                         <form className={styles.login_form} >
                             < input type='email' placeholder='이메일을 입력하세요' />
                             <button>로그인</button>

@@ -1,7 +1,7 @@
 .main_container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   width: 90%;
   margin: 0 auto;
   border: 1px solid black;
@@ -10,11 +10,15 @@
     width: 18rem;
     height: 20rem;
     margin: 1.2rem;
-    color: white;
+    color: black;
     background-color: white;
     border-radius: 1rem;
-    // text-align: center;
+    display: flex;
+    flex-direction: column;
 
+    .main_img {
+      height: 100%;
+    }
 
     img {
       width: 100%;
@@ -23,30 +27,46 @@
       cursor: pointer;
 
       &:hover {
-        scale: 0.7;
+        transform: scale(0.7);
         border-radius: 10rem;
       }
     }
-  }
 
+    .main_info {
+      // flex: 1;
+      padding: 1rem;
+      background-color: gainsboro;
+      display: flex;
+      flex-direction: column;
 
-  .main_info {
-    display: flex;
-    justify-content: space-evenly;
-    font-size: 1.1rem;
-    background-color: lightcoral;
-    border-radius: 10px;
+      span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
+      .main_content {
+        // flex: 1;
+        border: 1px solid grey;
 
-    h4 {
-      margin: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+        p {
+          margin: 0.3rem;
+          font-size: 1rem;
+          height: 4rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
 
-    span {
-      color: yellow;
+    .main_id {
+      padding: 0.5rem;
+      min-height: 10%;
+
+      h5 {
+        margin: 0;
+        border: 1px solid blue;
+      }
     }
   }
 }

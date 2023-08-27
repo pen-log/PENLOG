@@ -22,8 +22,8 @@ export default function Nav({ darkMode, ismode }) {
                 <li onClick={darkMode}>
                     {ismode ? <BsFillMoonFill /> : <BsFillSunFill />}
                 </li>
-                <li>
-                    <BsSearch onClick={() => navigate('/search')} />
+                <li onClick={() => navigate('/search')}>
+                    <BsSearch />
                 </li>
                 <button className={styles.login_btn} onClick={() => navigate('/login')}>로그인</button>
             </div>
@@ -31,8 +31,8 @@ export default function Nav({ darkMode, ismode }) {
 
         <div className={styles.category}>
             <div className={styles.category_content}>
-                <li className={location.pathname === '/' ? "selected" : ""} onClick={() => navigate('/')}><AiOutlineRise /><span>트렌딩</span></li>
-                <li className={location.pathname === '/recent' ? "selected" : ""} onClick={() => navigate('/recent')}><BsClock /><span>최신</span></li>
+                <li className={location.pathname === '/' ? styles.selected : ""} onClick={() => navigate('/')}><AiOutlineRise /><span>트렌딩</span></li>
+                <li className={location.pathname === '/recent' ? styles.selected : ""} onClick={() => navigate('/recent')}><BsClock /><span>최신</span></li>
                 <select>
                     <option value="apple">오늘</option>
                     <option value="banana">이번주</option>
