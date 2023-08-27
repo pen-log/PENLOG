@@ -1,15 +1,17 @@
 import styles from '../css/main.module.scss';
+import data from '../dummy/data'
+import { useNavigate } from 'react-router-dom';
 
 function Main() {
-    const 상품 = ['1', '2', '3', '4', '5', 1, 2, 123]
+    const navigate = useNavigate()
     return (
         <div className={styles.main_container}>
-            {상품.map((a, i) => (
+            {data.map((a, i) => (
                 <div className={styles.main_item}>
-                    <img src="/PENLOG/frontend/public/logo.png" />
+                    <img src="logo.png" onClick={() => navigate('/detail/' + i)} />
                     <div className={styles.main_info}>
-                        <h4>{a}</h4>
-                        <span>글~</span>
+                        <h4>{a.id}</h4>
+                        <span>{a.title}</span>
                     </div>
                 </div>
             ))}

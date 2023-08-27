@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AiOutlineMore, AiOutlineRise } from "react-icons/ai";
-import { BsGraphUpArrow, BsClock, BsFillSunFill, BsFillMoonFill, BsSearch } from "react-icons/bs";
+import { BsClock, BsFillSunFill, BsFillMoonFill, BsSearch } from "react-icons/bs";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from '../css/nav.module.scss';
 

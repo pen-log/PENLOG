@@ -6,6 +6,7 @@ import Main from './pages/main';
 import Recent from './pages/recent';
 import Search from './pages/search';
 import Login from './components/login';
+import Detail from './pages/detail';
 function App() {
 
   const [ismode, setIsmode] = useState(false)
@@ -20,7 +21,7 @@ function App() {
         <Route path='/recent' element={<Recent />} />
         <Route path='/search' element={<Search />} />
         <Route path='/login' element={<Login />} />
-
+        <Route path='/detail/:id' element={<Detail />} />
       </Routes>
     </div>
   );
