@@ -9,6 +9,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -23,6 +24,7 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @SQLDelete(sql = "UPDATE member SET status = 'DELETED' WHERE id = ?")
 @Where(clause = "status = 'ACTIVE'")
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Member {
 
@@ -50,10 +52,11 @@ public class Member {
     private String image;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "modified_at", nullable = false)
     private LocalDateTime modifiedAt;
 
     @Enumerated(EnumType.STRING)
@@ -66,7 +69,6 @@ public class Member {
         this.email = email;
         this.title = null;
         this.image = null;
-        this.createdAt = LocalDateTime.now();
         this.status = MemberStatus.ACTIVE;
     }
 
@@ -77,42 +79,36 @@ public class Member {
 
         this.password = request.getPassword1();
         this.nickname = request.getNickname();
-        this.modifiedAt = LocalDateTime.now();
 
         return this;
     }
 
     public Member updateEmail(String email) {
         this.email = email;
-        this.modifiedAt = LocalDateTime.now();
 
         return this;
     }
 
     public Member updateMemberTitle(String title) {
         this.title = title;
-        this.modifiedAt = LocalDateTime.now();
 
         return this;
     }
 
     public Member updateProfileImage(String path) {
         this.image = path;
-        this.modifiedAt = LocalDateTime.now();
 
         return this;
     }
 
     public Member deleteProfileImage() {
         this.image = null;
-        this.modifiedAt = LocalDateTime.now();
 
         return this;
     }
 
     public void changeStatus(MemberStatus status) {
         this.status = status;
-        this.modifiedAt = LocalDateTime.now();
     }
 
     public boolean isAdmin() {
