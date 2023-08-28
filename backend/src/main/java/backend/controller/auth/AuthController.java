@@ -64,7 +64,7 @@ public class AuthController {
 
         String password = request.getPassword1();
 
-        memberService.join(username, password);
+        memberService.join(username, password, request.getNickname(), username);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

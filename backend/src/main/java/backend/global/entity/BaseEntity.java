@@ -20,10 +20,11 @@ import static backend.global.StatusType.USABLE;
 public class BaseEntity {
 
     @CreatedDate
-    @Column(nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "modified_at", nullable = false)
     private LocalDateTime modifiedAt;
 
     @Column(nullable = false)

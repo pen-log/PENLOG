@@ -23,12 +23,14 @@ class MemberServiceTest {
     void joinTest() {
         String username = "username@example.com";
         String password = "1234";
+        String nickname = "nickname";
 
-        Member member = memberService.join(username, password);
+        Member member = memberService.join(username, password, nickname, username);
 
         assertThat(member.getUsername()).isEqualTo(username);
         assertThat(passwordEncoder.matches(password, member.getPassword())).isTrue();
-        assertThat(member.getNickname()).isEqualTo(username);
+        assertThat(member.getNickname()).isEqualTo(nickname);
+        assertThat(member.getEmail()).isNotNull();
     }
 
 }
