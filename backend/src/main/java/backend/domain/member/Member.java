@@ -34,8 +34,17 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String nickname;
+
+    @Column(unique = true)
+    private String email;
+
+    @Column(name = "member_title")
+    private String title;
+
+    @Column(name = "image_path")
+    private String image;
 
     @CreatedDate
     @Column(updatable = false)
@@ -47,20 +56,67 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
-    public Member(final String username, final String password, final String nickname) {
+    public Member(final String username, final String password, final String nickname, String email) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
+
+        if (email != null) {
+            this.email = email;
+        } else {
+            this.email = null;
+        }
+
+        this.title = null;
+        this.image = null;
         this.createdAt = LocalDateTime.now();
         this.status = MemberStatus.ACTIVE;
     }
 
-    public Member updateMember(String password, String nickname) {
+    public Member updateMemberPasswordAndNickname(String password, String nickname) {
         this.password = password;
         this.nickname = nickname;
         this.modifiedAt = LocalDateTime.now();
 
         return this;
+    }
+
+    public Member updateMemberEmail(String email) {
+        this.email = email;
+        this.modifiedAt = LocalDateTime.now();
+
+        return this;
+    }
+
+    public Member updateMemberTitle(String title) {
+        this.title = title;
+        this.modifiedAt = LocalDateTime.now();
+
+        return this;
+    }
+
+    public Member updateMemberProfileImage(String path) {
+        this.image = path;
+        this.modifiedAt = LocalDateTime.now();
+
+        return this;
+    }
+
+    public Member deleteMemberProfileImage() {
+        this.image = null;
+        this.modifiedAt = LocalDateTime.now();
+
+        return this;
+    }
+
+    public Member updateStatus(MemberStatus status) {
+        this.status = status;
+
+        return this;
+    }
+
+    public boolean isAdmin() {
+        return username.equals("admin");
     }
 
     public List<? extends GrantedAuthority> getGrantedAuthorities() {
@@ -73,10 +129,6 @@ public class Member {
         }
 
         return grantedAuthorities;
-    }
-
-    public boolean isAdmin() {
-        return username.equals("admin");
     }
 
 }
