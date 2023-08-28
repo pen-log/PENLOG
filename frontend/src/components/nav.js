@@ -4,7 +4,6 @@ import { BsClock, BsFillSunFill, BsFillMoonFill, BsSearch } from "react-icons/bs
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from '../css/nav.module.scss';
 
-
 export default function Nav({ darkMode, ismode }) {
     const navigate = useNavigate()
     const location = useLocation()

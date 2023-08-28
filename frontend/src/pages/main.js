@@ -8,10 +8,14 @@ function Main() {
         <div className={styles.main_container}>
             {data.map((a, i) => (
                 <div className={styles.main_item} key={i}>
-                    <img src="logo.png" onClick={() => navigate('/detail/' + i)} />
+                    <div className={styles.main_img}>
+                        <img src="velog.png" onClick={() => navigate('/detail/' + i)} />
+                    </div>
                     <div className={styles.main_info}>
-                        <h4>{a.id}</h4>
-                        <span>{a.title}</span>
+                        <div className={styles.main_title}>{a.title}</div>
+                        <div className={styles.main_content}>{a.content}</div>
+                        <div className={styles.main_period}>{a.period}</div>
+                        <div className={styles.main_name}><span onClick={() => navigate('/user/@' + a.name)}>{a.name}</span></div>
                     </div>
                 </div>
             ))}

@@ -1,3 +1,12 @@
+.login_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
 .login_container {
     width: 50%;
     margin: 5rem auto;
