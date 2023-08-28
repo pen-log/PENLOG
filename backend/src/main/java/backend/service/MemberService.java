@@ -21,14 +21,18 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Member join(String username, String password) {
+    public Optional<Member> findById(Long id) {
+        return memberRepository.findById(id);
+    }
+
+    public Member join(String username, String password, String nickname, String email) {
         if (memberRepository.findByUsername(username).isPresent()) {
             throw new BadRequestException(MEMBER_USERNAME_ALREADY_EXISTS);
         }
 
         if (StringUtils.hasText(password)) password = passwordEncoder.encode(password);
 
-        Member member = new Member(username, password, username);
+        Member member = new Member(username, password, nickname, email);
 
         memberRepository.save(member);
 
@@ -54,8 +58,10 @@ public class MemberService {
     public Member loginBySocial(String provider, String username) {
         Optional<Member> opMember = memberRepository.findByUsername(username);
 
+        String socialUsername = provider.toUpperCase().charAt(0) + "_" + username;
+
         return opMember.orElseGet(() ->
-                join(provider.toUpperCase().charAt(0) + "_" + username, ""));
+                join(socialUsername, "", socialUsername, null));
     }
 
 }
