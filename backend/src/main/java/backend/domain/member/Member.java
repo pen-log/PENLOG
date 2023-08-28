@@ -1,5 +1,7 @@
 package backend.domain.member;
 
+import backend.domain.member.dto.MemberUpdateRequest;
+import backend.global.exception.BadRequestException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static backend.global.exception.ExceptionCode.MEMBER_PASSWORD_DO_NOT_MATCH;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -60,28 +63,26 @@ public class Member {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-
-        if (email != null) {
-            this.email = email;
-        } else {
-            this.email = null;
-        }
-
+        this.email = email;
         this.title = null;
         this.image = null;
         this.createdAt = LocalDateTime.now();
         this.status = MemberStatus.ACTIVE;
     }
 
-    public Member updateMemberPasswordAndNickname(String password, String nickname) {
-        this.password = password;
-        this.nickname = nickname;
+    public Member updatePasswordAndNickname(MemberUpdateRequest request) {
+        if (!request.getPassword1().equals(request.getPassword2())) {
+            throw new BadRequestException(MEMBER_PASSWORD_DO_NOT_MATCH);
+        }
+
+        this.password = request.getPassword1();
+        this.nickname = request.getNickname();
         this.modifiedAt = LocalDateTime.now();
 
         return this;
     }
 
-    public Member updateMemberEmail(String email) {
+    public Member updateEmail(String email) {
         this.email = email;
         this.modifiedAt = LocalDateTime.now();
 
@@ -95,24 +96,23 @@ public class Member {
         return this;
     }
 
-    public Member updateMemberProfileImage(String path) {
+    public Member updateProfileImage(String path) {
         this.image = path;
         this.modifiedAt = LocalDateTime.now();
 
         return this;
     }
 
-    public Member deleteMemberProfileImage() {
+    public Member deleteProfileImage() {
         this.image = null;
         this.modifiedAt = LocalDateTime.now();
 
         return this;
     }
 
-    public Member updateStatus(MemberStatus status) {
+    public void changeStatus(MemberStatus status) {
         this.status = status;
-
-        return this;
+        this.modifiedAt = LocalDateTime.now();
     }
 
     public boolean isAdmin() {
