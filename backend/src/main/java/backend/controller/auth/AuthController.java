@@ -6,6 +6,7 @@ import backend.domain.member.Member;
 import backend.domain.member.dto.MemberCreateRequest;
 import backend.global.exception.BadRequestException;
 import backend.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,14 @@ import static backend.global.exception.ExceptionCode.MEMBER_PASSWORD_DO_NOT_MATC
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/usr")
 public class AuthController {
 
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> loginByEmail(@RequestBody LoginRequest loginRequest) {
+    @GetMapping("/login")
+    public ResponseEntity<LoginResponse> loginByEmail(@Valid @RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
 
@@ -55,7 +57,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody MemberCreateRequest request) {
+    public ResponseEntity<Void> register(@Valid @RequestBody MemberCreateRequest request) {
         String username = request.getUsername();
 
         if (!request.getPassword1().equals(request.getPassword2())) {

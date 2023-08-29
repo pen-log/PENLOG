@@ -17,13 +17,12 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf().disable() // TODO : 개발 중에만 유지
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register").permitAll()
-                        .requestMatchers("/login/**").anonymous()
-                        .anyRequest().authenticated())
-                .formLogin(formLogin -> formLogin.loginPage("/login")
+                        .anyRequest().permitAll())
+                .formLogin(formLogin -> formLogin.loginPage("/usr/login")
                         .defaultSuccessUrl("/", true))
-                .oauth2Login(oauth2Login -> oauth2Login.loginPage("/login")
+                .oauth2Login(oauth2Login -> oauth2Login.loginPage("/usr/login")
                         .defaultSuccessUrl("/", true))
                 .logout(logout -> logout.logoutUrl("/logout"))
                 .build();
