@@ -21,8 +21,20 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional(readOnly = true)
     public Optional<Member> findById(Long id) {
         return memberRepository.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Member findByUsername(String username) {
+        Optional<Member> opMember = memberRepository.findByUsername(username);
+
+        if (opMember.isEmpty()) {
+            throw new BadRequestException(MEMBER_NOT_FOUND);
+        }
+
+        return opMember.get();
     }
 
     public Member join(String username, String password, String nickname, String email) {
