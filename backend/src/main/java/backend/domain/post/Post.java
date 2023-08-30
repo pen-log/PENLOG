@@ -5,7 +5,7 @@ import backend.domain.comment.Comment;
 import backend.domain.member.Member;
 import backend.domain.post.dto.PostCreateRequest;
 import backend.domain.post.dto.PostUpdateRequest;
-import backend.domain.postTag.PostTag;
+import backend.domain.tag.Tag;
 import backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class Post extends BaseEntity {
     private Category category;
 
     @OneToMany
-    private List<PostTag> postTags = new ArrayList<>();
+    private List<Tag> tags = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
@@ -63,10 +63,8 @@ public class Post extends BaseEntity {
         return this;
     }
 
-    public Post addPostTags(PostTag... postTags) {
-        this.postTags.addAll(Arrays.asList(postTags));
-
-        return this;
+    public void addTags(Tag... tags) {
+        this.tags.addAll(Arrays.asList(tags));
     }
 
     public void addComment(Comment comment) {
