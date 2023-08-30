@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -19,7 +21,8 @@ public class SecurityConfig {
         return http
                 .csrf().disable() // TODO : 개발 중에만 유지
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll())
+                        .requestMatchers(antMatcher("/usr/register")).permitAll()
+                        .requestMatchers(antMatcher("/usr/login")).anonymous())
                 .formLogin(formLogin -> formLogin.loginPage("/usr/login")
                         .defaultSuccessUrl("/", true))
                 .oauth2Login(oauth2Login -> oauth2Login.loginPage("/usr/login")
