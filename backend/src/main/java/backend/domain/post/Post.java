@@ -1,15 +1,18 @@
 package backend.domain.post;
 
+import backend.domain.category.Category;
 import backend.domain.comment.Comment;
 import backend.domain.member.Member;
 import backend.domain.post.dto.PostCreateRequest;
 import backend.domain.post.dto.PostUpdateRequest;
+import backend.domain.postTag.PostTag;
 import backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -33,22 +36,35 @@ public class Post extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
+
+    @OneToMany
+    private List<PostTag> postTags = new ArrayList<>();
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    // 카테고리
-
-    // 태그 목록
-
-    public Post(Member member, PostCreateRequest request) {
+    public Post(Member member, PostCreateRequest request, Category category) {
         this.member = member;
         this.title = request.getTitle();
         this.content = request.getContent();
+
+        if (category != null) {
+            this.category = category;
+            this.category.addPost(this);
+        }
     }
 
     public Post update(PostUpdateRequest request) {
         this.title = request.getTitle();
         this.content = request.getContent();
+
+        return this;
+    }
+
+    public Post addPostTags(PostTag... postTags) {
+        this.postTags.addAll(Arrays.asList(postTags));
 
         return this;
     }
