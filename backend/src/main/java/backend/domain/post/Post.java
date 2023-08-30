@@ -1,9 +1,9 @@
 package backend.domain.post;
 
+import backend.domain.category.Category;
 import backend.domain.comment.Comment;
 import backend.domain.member.Member;
-import backend.domain.post.dto.PostCreateRequest;
-import backend.domain.post.dto.PostUpdateRequest;
+import backend.domain.tag.Tag;
 import backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -33,23 +33,29 @@ public class Post extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
+
+    @OneToMany
+    private List<Tag> tags = new ArrayList<>();
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    // 카테고리
-
-    // 태그 목록
-
-    public Post(Member member, PostCreateRequest request) {
+    public Post(Member member, String title, String content, Category category, List<Tag> tags) {
         this.member = member;
-        this.title = request.getTitle();
-        this.content = request.getContent();
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.tags = tags;
     }
 
-    public Post update(PostUpdateRequest request) {
-        this.title = request.getTitle();
-        this.content = request.getContent();
-
+    public Post update(String title, String content, Category category, List<Tag> tags) {
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.tags = tags;
+        
         return this;
     }
 
