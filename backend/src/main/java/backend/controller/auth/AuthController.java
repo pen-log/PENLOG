@@ -1,10 +1,9 @@
 package backend.controller.auth;
 
 import backend.controller.auth.request.LoginRequest;
+import backend.controller.auth.request.RegisterRequest;
 import backend.controller.auth.response.LoginResponse;
 import backend.controller.auth.response.RegisterResponse;
-import backend.domain.member.Member;
-import backend.controller.auth.request.RegisterRequest;
 import backend.global.exception.BadRequestException;
 import backend.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 import static backend.global.exception.ExceptionCode.MEMBER_PASSWORD_DO_NOT_MATCH;
 
@@ -32,10 +29,10 @@ public class AuthController {
     @GetMapping("/login")
     @Operation(summary = "이메일을 통한 로그인")
     public ResponseEntity<LoginResponse> loginByEmail(@Valid @RequestBody LoginRequest loginRequest) {
-        Member member = memberService.loginByEmail(
+        LoginResponse response = memberService.loginByEmail(
                 loginRequest.getUsername(), passwordEncoder.encode(loginRequest.getPassword()));
 
-        return new ResponseEntity<>(loginResponse, HttpStatus.OK);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
@@ -49,9 +46,9 @@ public class AuthController {
 
         String password = request.getPassword1();
 
-        memberService.join(username, password, request.getNickname(), username);
+        RegisterResponse response = memberService.join(username, password, request.getNickname(), username);
 
-        return ResponseEntity.created(URI.create("/")).build();
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 }

@@ -8,14 +8,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.util.Base64;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,18 +22,13 @@ import java.util.Map;
 @Component
 public class JwtProvider {
 
-    @Value("${jwt.secret.key}")
-    private String salt;
-
     private SecretKey secretKey;
 
     private final CustomUserDetailsService userDetailsService;
 
     @PostConstruct
     protected void init() {
-        secretKey = Keys.hmacShaKeyFor(
-                Base64.getEncoder().encodeToString(salt.getBytes()).getBytes()
-        );
+        secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 
     public String generateToken(Map<String, Object> claims, int seconds) {
@@ -81,7 +74,7 @@ public class JwtProvider {
         try {
             return new ObjectMapper().readValue(jsonStr, LinkedHashMap.class);
         } catch (JsonProcessingException e) {
-            return null;
+            return Map.of();
         }
     }
 
