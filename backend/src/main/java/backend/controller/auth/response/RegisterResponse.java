@@ -12,17 +12,9 @@ public class RegisterResponse {
 
     private String username;
 
-    private String password;
-
-    private String nickname;
-
-    private String token;
-
     public RegisterResponse(Member member) {
         this.id = member.getId();
         this.username = member.getUsername();
-        this.password = member.getPassword();
-        this.nickname = member.getNickname();
     }
 
 }

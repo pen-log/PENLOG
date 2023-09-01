@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Like {
+public class Liked {
 
     @Id
     @GeneratedValue
@@ -23,7 +23,7 @@ public class Like {
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
-    public Like(Member member, Post post) {
+    public Liked(Member member, Post post) {
         this.member = member;
         this.post = post;
     }

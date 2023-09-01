@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.controller.auth.response.RegisterResponse;
 import backend.domain.member.Member;
 import backend.global.exception.BadRequestException;
 import backend.repository.MemberRepository;
@@ -37,7 +38,7 @@ public class MemberService {
         return opMember.get();
     }
 
-    public Member join(String username, String password, String nickname, String email) {
+    public RegisterResponse join(String username, String password, String nickname, String email) {
         if (memberRepository.findByUsername(username).isPresent()) {
             throw new BadRequestException(MEMBER_USERNAME_ALREADY_EXISTS);
         }
@@ -48,7 +49,7 @@ public class MemberService {
 
         memberRepository.save(member);
 
-        return member;
+        return new RegisterResponse(member);
     }
 
     public Member loginByEmail(String username, String password) {
@@ -67,13 +68,13 @@ public class MemberService {
         return member;
     }
 
-    public Member loginBySocial(String provider, String username) {
+    public RegisterResponse loginBySocial(String provider, String username) {
         Optional<Member> opMember = memberRepository.findByUsername(username);
 
         String socialUsername = provider.toUpperCase().charAt(0) + "_" + username;
 
-        return opMember.orElseGet(() ->
-                join(socialUsername, "", socialUsername, null));
+        return opMember.map(RegisterResponse::new)
+                .orElseGet(() -> join(socialUsername, "", socialUsername, null));
     }
 
 }

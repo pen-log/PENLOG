@@ -2,62 +2,45 @@ package backend.controller.auth;
 
 import backend.controller.auth.request.LoginRequest;
 import backend.controller.auth.response.LoginResponse;
+import backend.controller.auth.response.RegisterResponse;
 import backend.domain.member.Member;
-import backend.domain.member.dto.MemberCreateRequest;
+import backend.controller.auth.request.RegisterRequest;
 import backend.global.exception.BadRequestException;
 import backend.service.MemberService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 import static backend.global.exception.ExceptionCode.MEMBER_PASSWORD_DO_NOT_MATCH;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/usr")
+@Tag(name = "AuthController", description = "회원가입 및 로그인 컨트롤러")
 public class AuthController {
 
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
+    @Operation(summary = "이메일을 통한 로그인")
     public ResponseEntity<LoginResponse> loginByEmail(@Valid @RequestBody LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
-        String password = loginRequest.getPassword();
+        Member member = memberService.loginByEmail(
+                loginRequest.getUsername(), passwordEncoder.encode(loginRequest.getPassword()));
 
-        Member member = memberService.loginByEmail(username, passwordEncoder.encode(password));
-
-        LoginResponse loginResponse = new LoginResponse().toMember(member);
-
-        return ResponseEntity.ok(loginResponse);
-    }
-
-    @GetMapping("/login/oauth2/code/{provider}")
-    public ResponseEntity<LoginResponse> loginByOAuth2(
-            @PathVariable String provider,
-            Authentication authentication
-    ) {
-
-        OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-        DefaultOAuth2User oAuth2User = (DefaultOAuth2User) oauthToken.getPrincipal();
-
-        String username = oAuth2User.getName();
-
-        Member member = memberService.loginBySocial(provider, username);
-
-        LoginResponse loginResponse = new LoginResponse().toMember(member);
-
-        return ResponseEntity.ok(loginResponse);
+        return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@Valid @RequestBody MemberCreateRequest request) {
+    @Operation(summary = "이메일을 통한 회원가입")
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
         String username = request.getUsername();
 
         if (!request.getPassword1().equals(request.getPassword2())) {
@@ -68,7 +51,7 @@ public class AuthController {
 
         memberService.join(username, password, request.getNickname(), username);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.created(URI.create("/")).build();
     }
 
 }
