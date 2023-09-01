@@ -1,4 +1,4 @@
-package backend.repository;
+package backend.domain.category.repository;
 
 import backend.domain.category.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

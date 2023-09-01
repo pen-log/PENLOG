@@ -1,4 +1,4 @@
-package backend.repository;
+package backend.domain.member.repository;
 
 import backend.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

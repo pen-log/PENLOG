@@ -1,8 +1,8 @@
-package backend.service;
+package backend.domain.category.service;
 
 import backend.domain.category.Category;
+import backend.domain.category.repository.CategoryRepository;
 import backend.global.exception.BadRequestException;
-import backend.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,8 +2,8 @@ package backend.global.config;
 
 import backend.controller.auth.response.RegisterResponse;
 import backend.domain.member.Member;
+import backend.domain.member.service.MemberService;
 import backend.global.exception.BadRequestException;
-import backend.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

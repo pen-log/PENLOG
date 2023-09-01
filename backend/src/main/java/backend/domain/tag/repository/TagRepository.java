@@ -1,4 +1,4 @@
-package backend.repository;
+package backend.domain.tag.repository;
 
 import backend.domain.tag.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;

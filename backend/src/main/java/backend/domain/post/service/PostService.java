@@ -1,7 +1,7 @@
-package backend.service;
+package backend.domain.post.service;
 
 import backend.domain.post.Post;
-import backend.repository.PostRepository;
+import backend.domain.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

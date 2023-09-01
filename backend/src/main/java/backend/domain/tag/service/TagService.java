@@ -1,8 +1,8 @@
-package backend.service;
+package backend.domain.tag.service;
 
 import backend.domain.tag.Tag;
+import backend.domain.tag.repository.TagRepository;
 import backend.global.exception.BadRequestException;
-import backend.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,11 +1,11 @@
-package backend.service;
+package backend.domain.member.service;
 
 import backend.controller.auth.response.LoginResponse;
 import backend.controller.auth.response.RegisterResponse;
 import backend.domain.member.Member;
+import backend.domain.member.repository.MemberRepository;
 import backend.global.config.jwt.JwtProvider;
 import backend.global.exception.BadRequestException;
-import backend.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

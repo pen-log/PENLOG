@@ -1,14 +1,14 @@
 package backend.controller.post;
 
 import backend.domain.category.Category;
+import backend.domain.category.service.CategoryService;
 import backend.domain.member.Member;
+import backend.domain.member.service.MemberService;
 import backend.domain.post.Post;
 import backend.domain.post.dto.PostCreateRequest;
+import backend.domain.post.service.PostService;
 import backend.domain.tag.Tag;
-import backend.service.CategoryService;
-import backend.service.MemberService;
-import backend.service.PostService;
-import backend.service.TagService;
+import backend.domain.tag.service.TagService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;

@@ -1,7 +1,7 @@
 package backend.global.config;
 
 import backend.domain.member.Member;
-import backend.repository.MemberRepository;
+import backend.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
