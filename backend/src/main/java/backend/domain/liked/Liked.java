@@ -1,4 +1,4 @@
-package backend.domain.like;
+package backend.domain.liked;
 
 import backend.domain.member.Member;
 import backend.domain.post.Post;
