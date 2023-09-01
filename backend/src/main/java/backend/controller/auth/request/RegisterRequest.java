@@ -1,4 +1,4 @@
-package backend.domain.member.dto;
+package backend.controller.auth.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class MemberCreateRequest {
+public class RegisterRequest {
 
     @NotBlank(message = "이메일을 입력해주세요.")
     private String username;
