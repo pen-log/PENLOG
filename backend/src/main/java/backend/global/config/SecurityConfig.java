@@ -37,7 +37,7 @@ public class SecurityConfig {
                                 antMatcher("/v3/api-docs/**"),
                                 antMatcher("/v3/api-docs**")).permitAll()
                         .requestMatchers(antMatcher("/usr/login")).anonymous()
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll()) // TODO : 개발 중에만 유지
                 .formLogin(formLogin -> formLogin.loginPage("/usr/login")
                         .defaultSuccessUrl("/", true))
                 .oauth2Login(oauth2Login -> oauth2Login.loginPage("/usr/login")

@@ -15,7 +15,7 @@ public class HashTag {
 
     @Id
     @GeneratedValue
-    @Column(name = "hashtag_id")
+    @Column(name = "hash_tag_id")
     private Long id;
 
     private String name;
