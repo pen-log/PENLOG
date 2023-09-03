@@ -31,9 +31,13 @@ public class SecurityConfig {
                 .csrf().disable() // TODO : 개발 중에만 유지
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(antMatcher("/usr/register")).permitAll()
-                        .requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
-                        .requestMatchers(antMatcher("/swagger-ui.html")).permitAll()
-                        .requestMatchers(antMatcher("/usr/login")).anonymous())
+                        .requestMatchers(
+                                antMatcher("/swagger-ui**"),
+                                antMatcher("/swagger-ui/**"),
+                                antMatcher("/v3/api-docs/**"),
+                                antMatcher("/v3/api-docs**")).permitAll()
+                        .requestMatchers(antMatcher("/usr/login")).anonymous()
+                        .anyRequest().permitAll()) // TODO : 개발 중에만 유지
                 .formLogin(formLogin -> formLogin.loginPage("/usr/login")
                         .defaultSuccessUrl("/", true))
                 .oauth2Login(oauth2Login -> oauth2Login.loginPage("/usr/login")

@@ -3,7 +3,6 @@ package backend.global.config;
 import backend.controller.auth.response.RegisterResponse;
 import backend.domain.member.Member;
 import backend.domain.member.service.MemberService;
-import backend.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -11,10 +10,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-import static backend.global.exception.ExceptionCode.MEMBER_NOT_FOUND;
 
 @RequiredArgsConstructor
 @Service
@@ -32,13 +27,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         RegisterResponse response = memberService.loginBySocial(providerTypeCode, username);
 
-        Optional<Member> opMember = memberService.findById(response.getId());
-
-        if (opMember.isEmpty()) {
-            throw new BadRequestException(MEMBER_NOT_FOUND);
-        }
-
-        Member member = opMember.get();
+        Member member = memberService.findById(response.getId());
 
         return new CustomOAuth2User(member.getUsername(), member.getPassword(), member.getGrantedAuthorities());
     }
