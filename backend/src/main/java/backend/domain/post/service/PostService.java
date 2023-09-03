@@ -2,11 +2,15 @@ package backend.domain.post.service;
 
 import backend.domain.post.Post;
 import backend.domain.post.repository.PostRepository;
+import backend.global.exception.BadRequestException;
+import backend.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
+import static backend.global.exception.ExceptionCode.*;
 
 @RequiredArgsConstructor
 @Service
@@ -16,12 +20,19 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public Optional<Post> findById(Long id) {
-        return postRepository.findById(id);
+    public Post findById(Long id) {
+        Optional<Post> opPost = postRepository.findById(id);
+
+        if (opPost.isEmpty()) {
+            throw new BadRequestException(POST_NOT_FOUND);
+        }
+
+        return opPost.get();
     }
 
-    public void save(Post post) {
+    public Long save(Post post) {
         postRepository.save(post);
+        return post.getId();
     }
 
 }
