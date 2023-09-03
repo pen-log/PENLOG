@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ExceptionCode {
 
+    UNAUTHORIZED(0000, "접근 권한이 없습니다."),
+
     MEMBER_NOT_FOUND(1000, "존재하지 않는 회원입니다."),
     MEMBER_USERNAME_ALREADY_EXISTS(1001, "이미 존재하는 회원입니다."),
     MEMBER_PASSWORD_DO_NOT_MATCH(1002, "비밀번호가 일치하지 않습니다."),
