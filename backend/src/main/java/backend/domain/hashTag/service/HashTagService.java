@@ -1,7 +1,7 @@
-package backend.domain.tag.service;
+package backend.domain.hashTag.service;
 
-import backend.domain.tag.Tag;
-import backend.domain.tag.repository.TagRepository;
+import backend.domain.hashTag.HashTag;
+import backend.domain.hashTag.repository.HashTagRepository;
 import backend.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,18 +14,18 @@ import static backend.global.exception.ExceptionCode.TAG_NOT_FOUND;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class TagService {
+public class HashTagService {
 
-    private final TagRepository tagRepository;
+    private final HashTagRepository hashtagRepository;
 
     @Transactional(readOnly = true)
-    public Optional<Tag> findById(Long id) {
-        return tagRepository.findById(id);
+    public Optional<HashTag> findById(Long id) {
+        return hashtagRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
-    public Tag findByName(String name) {
-        Optional<Tag> opTag = tagRepository.findByName(name);
+    public HashTag findByName(String name) {
+        Optional<HashTag> opTag = hashtagRepository.findByName(name);
 
         if (opTag.isEmpty()) {
             throw new BadRequestException(TAG_NOT_FOUND);

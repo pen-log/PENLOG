@@ -1,4 +1,4 @@
-package backend.domain.tag;
+package backend.domain.hashTag;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Tag {
+public class HashTag {
 
     @Id
     @GeneratedValue
-    @Column(name = "tag_id")
+    @Column(name = "hashtag_id")
     private Long id;
 
     private String name;
 
-    public Tag(String name) {
+    public HashTag(String name) {
         this.name = name;
     }
 

@@ -3,7 +3,7 @@ package backend.domain.post;
 import backend.domain.category.Category;
 import backend.domain.comment.Comment;
 import backend.domain.member.Member;
-import backend.domain.tag.Tag;
+import backend.domain.hashTag.HashTag;
 import backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -37,24 +37,24 @@ public class Post extends BaseEntity {
     private Category category;
 
     @OneToMany
-    private List<Tag> tags = new ArrayList<>();
+    private List<HashTag> hashTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    public Post(Member member, String title, String content, Category category, List<Tag> tags) {
+    public Post(Member member, String title, String content, Category category, List<HashTag> hashTags) {
         this.member = member;
         this.title = title;
         this.content = content;
         this.category = category;
-        this.tags = tags;
+        this.hashTags = hashTags;
     }
 
-    public Post update(String title, String content, Category category, List<Tag> tags) {
+    public Post update(String title, String content, Category category, List<HashTag> hashTags) {
         this.title = title;
         this.content = content;
         this.category = category;
-        this.tags = tags;
+        this.hashTags = hashTags;
         
         return this;
     }
