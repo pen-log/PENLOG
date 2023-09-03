@@ -12,7 +12,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import static backend.global.exception.ExceptionCode.MEMBER_PASSWORD_DO_NOT_MATCH;
@@ -24,13 +23,14 @@ import static backend.global.exception.ExceptionCode.MEMBER_PASSWORD_DO_NOT_MATC
 public class AuthController {
 
     private final MemberService memberService;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     @Operation(summary = "이메일을 통한 로그인")
     public ResponseEntity<LoginResponse> loginByEmail(@Valid @RequestBody LoginRequest loginRequest) {
         LoginResponse response = memberService.loginByEmail(
-                loginRequest.getUsername(), passwordEncoder.encode(loginRequest.getPassword()));
+                loginRequest.getUsername(),
+                loginRequest.getPassword()
+        );
 
         return ResponseEntity.ok(response);
     }

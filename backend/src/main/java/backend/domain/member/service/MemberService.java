@@ -7,11 +7,15 @@ import backend.domain.member.repository.MemberRepository;
 import backend.global.config.jwt.JwtProvider;
 import backend.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,8 +33,14 @@ public class MemberService {
     private static final int EXPIRATION = 60 * 60 * 24 * 365 * 100;
 
     @Transactional(readOnly = true)
-    public Optional<Member> findById(Long id) {
-        return memberRepository.findById(id);
+    public Member findById(Long id) {
+        Optional<Member> opMember = memberRepository.findById(id);
+
+        if (opMember.isEmpty()) {
+            throw new BadRequestException(MEMBER_NOT_FOUND);
+        }
+
+        return opMember.get();
     }
 
     @Transactional(readOnly = true)
@@ -67,7 +77,7 @@ public class MemberService {
 
         Member member = opMember.get();
 
-        if (passwordEncoder.matches(member.getPassword(), password)) {
+        if (!passwordEncoder.matches(password, member.getPassword())) {
             throw new BadRequestException(MEMBER_PASSWORD_DO_NOT_MATCH);
         }
 
