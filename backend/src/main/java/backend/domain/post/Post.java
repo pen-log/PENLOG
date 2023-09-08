@@ -2,8 +2,8 @@ package backend.domain.post;
 
 import backend.domain.category.Category;
 import backend.domain.comment.Comment;
-import backend.domain.member.Member;
 import backend.domain.hashTag.HashTag;
+import backend.domain.member.Member;
 import backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
