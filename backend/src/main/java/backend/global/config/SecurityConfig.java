@@ -30,7 +30,6 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf().disable() // TODO : 개발 중에만 유지
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(antMatcher("/usr/register")).permitAll()
                         .requestMatchers(
                                 antMatcher("/swagger-ui**"),
                                 antMatcher("/swagger-ui/**"),
@@ -38,10 +37,8 @@ public class SecurityConfig {
                                 antMatcher("/v3/api-docs**")).permitAll()
                         .requestMatchers(antMatcher("/usr/login")).anonymous()
                         .anyRequest().permitAll()) // TODO : 개발 중에만 유지
-                .formLogin(formLogin -> formLogin.loginPage("/usr/login")
-                        .defaultSuccessUrl("/", true))
-                .oauth2Login(oauth2Login -> oauth2Login.loginPage("/usr/login")
-                        .defaultSuccessUrl("/", true))
+                .formLogin(formLogin -> formLogin.loginPage("/usr/login"))
+                .oauth2Login(oauth2Login -> oauth2Login.loginPage("/usr/login"))
                 .logout(logout -> logout.logoutUrl("/logout"))
                 .exceptionHandling()
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
