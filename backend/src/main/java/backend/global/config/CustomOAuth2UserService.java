@@ -1,7 +1,8 @@
 package backend.global.config;
 
+import backend.controller.auth.response.RegisterResponse;
 import backend.domain.member.Member;
-import backend.service.MemberService;
+import backend.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -24,7 +25,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         String username = oAuth2User.getName();
 
-        Member member = memberService.loginBySocial(providerTypeCode, username);
+        RegisterResponse response = memberService.loginBySocial(providerTypeCode, username);
+
+        Member member = memberService.findById(response.getId());
 
         return new CustomOAuth2User(member.getUsername(), member.getPassword(), member.getGrantedAuthorities());
     }

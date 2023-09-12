@@ -1,6 +1,7 @@
 package backend.service;
 
-import backend.domain.member.Member;
+import backend.controller.auth.response.RegisterResponse;
+import backend.domain.member.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,13 +23,11 @@ class MemberServiceTest {
     @Test
     void joinTest() {
         String username = "username@example.com";
-        String password = "1234";
 
-        Member member = memberService.join(username, password);
+        RegisterResponse response = memberService.join(username, "1234", username, null);
 
-        assertThat(member.getUsername()).isEqualTo(username);
-        assertThat(passwordEncoder.matches(password, member.getPassword())).isTrue();
-        assertThat(member.getNickname()).isEqualTo(username);
+        assertThat(response.getId()).isEqualTo(1);
+        assertThat(response.getUsername()).isEqualTo(username);
     }
 
 }
