@@ -3,7 +3,6 @@ import './App.scss';
 import { Routes, Route } from 'react-router-dom';
 import Nav from './components/nav';
 import Main from './pages/main';
-import Recent from './pages/recent';
 import Search from './pages/search';
 import Detail from './pages/detail';
 import Signup from './pages/signup';
@@ -23,12 +22,11 @@ function App() {
       <Nav darkMode={darkMode} ismode={ismode} />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/recent" element={<Recent />} />
         <Route path="/search" element={<Search />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/write" element={<Write />} />
-        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/detail/:title" element={<Detail />} />
         <Route path="/user/:id" element={<User />} />
       </Routes>
     </div>

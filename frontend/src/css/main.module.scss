@@ -28,7 +28,6 @@
     }
 
     .main_info {
-      border: 1px solid red;
       height: 60%;
       width: 90%;
       margin: 1rem auto;
@@ -36,7 +35,6 @@
       flex-direction: column;
 
       .main_title {
-        border: 1px solid red;
         height: 20%;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -46,7 +44,6 @@
       }
 
       .main_content {
-        border: 1px solid red;
         height: 40%;
         max-height: 4rem;
         line-height: 1.3rem;
@@ -58,15 +55,80 @@
 
     .main_period {
       height: 20%;
-      border: 1px solid red;
     }
 
     .main_name {
-      border: 1px solid blue;
       height: 20%;
 
       span {
         cursor: pointer;
+      }
+    }
+  }
+}
+
+.category {
+  width: 90%;
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .category_content {
+    display: flex;
+    list-style: none;
+
+    li {
+      font-size: 1.2rem;
+      margin: 0.5rem;
+      cursor: pointer;
+      color: #ccc;
+
+      span {
+        margin-left: 1rem;
+      }
+    }
+
+    .selected {
+      color: black;
+    }
+
+    select {
+      font-size: 1rem;
+      margin: 0.5rem;
+    }
+  }
+
+  .category_more {
+    display: inline-block;
+    position: relative;
+
+    .dropdown_icon {
+      border: none;
+      cursor: pointer;
+    }
+
+    .dropdown_list {
+      position: absolute;
+      left: -10rem;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      list-style: none;
+      padding: 0;
+      display: none;
+      font-size: 1rem;
+
+      &.active {
+        display: block;
+      }
+
+      li {
+        margin: 1rem;
+        cursor: pointer;
+
+        &:hover {
+          color: rgb(79, 216, 113);
+        }
       }
     }
   }
