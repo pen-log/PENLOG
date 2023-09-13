@@ -48,7 +48,7 @@ public class PostController {
         Member member = memberService.findByUsername(user.getUsername());
         String title = request.getTitle();
         String content = request.getContent();
-        Category category = categoryService.findByTitle(request.getCategory());
+        Category category = categoryService.findByMemberAndId(member, request.getCategoryId());
         List<HashTag> hashTags = new ArrayList<>();
 
         for (String tagName : request.getTags()) {

@@ -1,5 +1,6 @@
 package backend.domain.category;
 
+import backend.domain.member.Member;
 import backend.domain.post.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,12 +21,16 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
+
     private String title;
 
     @OneToMany(mappedBy = "category")
     private List<Post> posts = new ArrayList<>();
 
-    public Category(String title) {
+    public Category(Member member, String title) {
+        this.member = member;
         this.title = title;
     }
 

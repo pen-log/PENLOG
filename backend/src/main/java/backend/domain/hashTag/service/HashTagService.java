@@ -1,6 +1,7 @@
 package backend.domain.hashTag.service;
 
 import backend.domain.hashTag.HashTag;
+import backend.domain.hashTag.dto.HashTagCreateRequest;
 import backend.domain.hashTag.repository.HashTagRepository;
 import backend.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,14 @@ public class HashTagService {
         }
 
         return opTag.get();
+    }
+
+    public HashTag create(HashTagCreateRequest request) {
+        return hashtagRepository.save(new HashTag(request.getName()));
+    }
+
+    public void deleteById(Long id) {
+        hashtagRepository.deleteById(id);
     }
 
 }

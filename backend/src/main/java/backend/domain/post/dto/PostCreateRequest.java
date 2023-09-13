@@ -18,7 +18,7 @@ public class PostCreateRequest {
     private String content;
 
     @Nullable
-    private String category;
+    private Long categoryId;
 
     @Nullable
     private List<String> tags;
