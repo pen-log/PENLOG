@@ -17,10 +17,16 @@ public enum ExceptionCode {
 
     COMMENT_NOT_FOUND(3000, "존재하지 않는 댓글입니다."),
 
-    CATEGORY_NOT_FOUND(4000, "존재하지 않는 카테고리입니다."),
+    SUB_COMMENT_NOT_FOUND(4000, "존재하지 않는 대댓글입니다."),
+
+    CATEGORY_NOT_FOUND(5000, "존재하지 않는 카테고리입니다."),
     
-    TAG_NOT_FOUND(5000, "존재하지 않는 태그입니다.");
+    TAG_NOT_FOUND(6000, "존재하지 않는 태그입니다."),
+
+    LIKED_NOT_FOUND(7000, "존재하지 않는 좋아요 정보입니다."),
+    LIKED_DUPLICATE(7001, "좋아요는 게시글 당 한 번만 가능합니다.");
 
     private final int code;
     private final String message;
+
 }
