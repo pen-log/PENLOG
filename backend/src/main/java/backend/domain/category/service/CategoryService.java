@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static backend.global.exception.ExceptionCode.CATEGORY_NOT_FOUND;
@@ -34,6 +35,11 @@ public class CategoryService {
         }
 
         return opCategory.get();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Category> findByMember(Member member) {
+        return categoryRepository.findByMember(member);
     }
 
     public Category create(Member member, CategoryRequest request) {
