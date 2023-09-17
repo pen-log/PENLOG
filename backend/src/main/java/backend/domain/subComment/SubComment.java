@@ -5,10 +5,12 @@ import backend.domain.member.Member;
 import backend.domain.subComment.dto.SubCommentCreateRequest;
 import backend.domain.subComment.dto.SubCommentUpdateRequest;
 import backend.global.entity.BaseEntity;
+import backend.global.exception.BadRequestException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static backend.global.exception.ExceptionCode.UNCHANGED;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -39,9 +41,17 @@ public class SubComment extends BaseEntity {
     }
 
     public SubComment update(SubCommentUpdateRequest request) {
+        isUpdated(request);
+
         this.content = request.getContent();
 
         return this;
+    }
+
+    private void isUpdated(SubCommentUpdateRequest request) {
+        if (request.getContent().equals(getContent())) {
+            throw new BadRequestException(UNCHANGED);
+        }
     }
 
 }

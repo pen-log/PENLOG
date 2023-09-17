@@ -1,6 +1,6 @@
 package backend.controller.post.response;
 
-import backend.controller.comment.Response.CommentResponse;
+import backend.controller.comment.response.CommentResponse;
 import backend.domain.comment.Comment;
 import backend.domain.hashTag.HashTag;
 import backend.domain.post.Post;
