@@ -4,6 +4,7 @@ import backend.controller.member.response.MemberResponse;
 import backend.domain.member.Member;
 import backend.domain.member.service.MemberService;
 import backend.global.exception.BadRequestException;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
@@ -25,6 +26,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/{id}")
+    @Operation(summary = "특정 회원 정보 조회")
     public ResponseEntity<MemberResponse> getMember(@PathVariable Long id, @AuthenticationPrincipal User user) {
         Member member = memberService.findById(id);
 
