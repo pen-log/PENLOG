@@ -42,7 +42,7 @@ Auto Code Generator의 품질이 나쁜 이유
     id: 1,
     title: '8년 차 개발자가 기술 면접 고수들에게',
     content: '오늘은 기술면접 잘 보시는 분들의 특징에 대해서 말씀드리고자 합니다. 인성면접과 달리 기술면접은 테크 기업이라면 어느 정도 공통',
-    period: '2022-01-02',
+    period: '2022-01-11',
     name: 'sksmsdi02'
 }, {
     id: 2,
@@ -54,13 +54,13 @@ Auto Code Generator의 품질이 나쁜 이유
     id: 3,
     title: '프론트의 디자인 시스템 구축기',
     content: '프로젝트 기획부터 디자인까지의 과정과 디자인 시스템을 어떤 식으로 구축했는지에 대한 과정을 담았습니다.',
-    period: '2022-01-09',
+    period: '2022-01-02',
     name: 'zxol00'
 }, {
     id: 4,
     title: 'Vanilla Js랑 React.. 뭐가 더 빨라요',
     content: 'Netflix 도 부분적으로 React 를 걷어내고 JavaScript 로 ............',
-    period: '2022-01-20',
+    period: '2022-03-01',
     name: 'gurke1m3'
 }, {
     id: 5,
@@ -86,6 +86,13 @@ Auto Code Generator의 품질이 나쁜 이유
     content: '이 글에서는 이벤트 루프, 비동기 API, Node.js 콜스택과 같은 핵심 구성 요소를 포함해 Node.js의 비동기적 특성을 설명하고 있습니다. 평소 JavaScript 런타임에 관심을 가지고',
     period: '2022-02-10',
     name: 'pcx000'
+}, {
+    id: 9,
+    title: '하나더 만들기',
+    content: '하나더 내용',
+    period: '2022-12-31',
+    name: 'abcd1234',
+    info: `이이를 해결하기 위해서는 디자이너가 처음부터 빠짐없이'`
 },
 ]
 

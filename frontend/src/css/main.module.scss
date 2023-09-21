@@ -1,11 +1,11 @@
-.main_container {
+.container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: 90%;
   margin: 0 auto;
 
-  .main_item {
+  .post {
     width: 18rem;
     height: 20rem;
     margin: 1.2rem;
@@ -16,7 +16,7 @@
     flex-direction: column;
     box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.04);
 
-    .main_img {
+    .img {
       height: 40%;
     }
 
@@ -27,41 +27,60 @@
       cursor: pointer;
     }
 
-    .main_info {
+    .info {
       height: 60%;
       width: 90%;
       margin: 1rem auto;
       display: flex;
       flex-direction: column;
 
-      .main_title {
+      .title {
         height: 20%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         font-weight: bold;
-
+        cursor: pointer;
       }
 
-      .main_content {
+      .content {
         height: 40%;
         max-height: 4rem;
         line-height: 1.3rem;
         overflow: hidden;
-        color: grey;
         font-size: 0.9rem;
+        color: gray;
+        cursor: pointer;
       }
     }
 
-    .main_period {
+    .period {
       height: 20%;
+      color: #ccc;
+      display: flex;
+      justify-content: end;
     }
 
-    .main_name {
+    .profile {
       height: 20%;
+      font-weight: bold;
+      display: flex;
 
-      span {
+      .profile_img {
+        width: 2rem;
+        height: 2rem;
+
+        img {
+          border-radius: 50%;
+          border: 1px solid grey;
+        }
+      }
+
+      .profile_id {
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-left: 0.3rem;
       }
     }
   }
@@ -90,12 +109,8 @@
     }
 
     .selected {
-      color: black;
-    }
-
-    select {
-      font-size: 1rem;
-      margin: 0.5rem;
+      color: rgb(79, 216, 113);
+      font-weight: bold;
     }
   }
 

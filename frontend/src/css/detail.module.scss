@@ -9,13 +9,14 @@
 
 .content {
     text-align: center;
-    width: 80%;
+    width: 60%;
     margin: 0 auto;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    line-height: 2rem;
 }
 
 .info {
-    width: 70%;
+    width: 60%;
     margin: 0 auto;
     display: flex;
 
@@ -27,22 +28,50 @@
         &:nth-child(1) {
             font-weight: bold;
         }
+
+        span {
+            cursor: pointer;
+        }
     }
 }
 
-.댓글 {
-    // display: flex;
-    width: 90%;
+.comment_container {
+    width: 60%;
     margin: 0 auto;
 
     textarea {
-        width: 50%;
-        height: 5rem;
+        width: 100%;
+        padding: 1rem 1rem 1.5rem;
+        border: 1px solid lightgrey;
+        max-width: 600px;
+        resize: none;
+        margin-bottom: 1.5rem;
+        border-radius: 4px;
+        font-size: 1rem;
+        color: black;
+        line-height: 1.75;
+    }
+
+    .comment_button {
+        button {
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: #12B886;
+            color: white;
+            border-radius: 4px;
+            padding: 0 1.5rem;
+            height: 2rem;
+            font-size: 1rem;
+        }
     }
 }
 
-.댓글러들 {
-    width: 90%;
-    margin: 0 auto;
-    border: 1px solid blue;
+
+.visitor {
+    width: 60%;
+    margin-top: 5rem;
+    border: 1px solid lightgrey;
+    border-radius: 0.5rem;
+    max-width: 600px;
 }
