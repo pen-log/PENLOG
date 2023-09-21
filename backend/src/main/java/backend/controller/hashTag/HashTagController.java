@@ -3,7 +3,6 @@ package backend.controller.hashTag;
 import backend.domain.hashTag.HashTag;
 import backend.domain.hashTag.dto.HashTagCreateRequest;
 import backend.domain.hashTag.service.HashTagService;
-import backend.domain.member.service.MemberService;
 import backend.domain.post.Post;
 import backend.domain.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,13 +16,12 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/hashTag")
+@RequestMapping("/hash-tag")
 @Tag(name = "HashTagController", description = "해시태그 관련 컨트롤러")
 public class HashTagController {
 
     private final HashTagService hashTagService;
     private final PostService postService;
-    private final MemberService memberService;
 
     @GetMapping("/{postId}")
     @Operation(summary = "특정 글의 해시태그 조회")

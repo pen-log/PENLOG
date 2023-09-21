@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static backend.global.exception.ExceptionCode.UNAUTHORIZED;
@@ -36,11 +37,16 @@ public class SubCommentController {
 
     @GetMapping("/{commentId}")
     @Operation(summary = "특정 댓글 하위의 대댓글 조회")
-    public ResponseEntity<List<SubComment>> getSubComments(@PathVariable Long commentId) {
+    public ResponseEntity<List<SubCommentResponse>> getSubComments(@PathVariable Long commentId) {
         Comment comment = commentService.findById(commentId);
         List<SubComment> subComments = subCommentService.findByComment(comment);
+        List<SubCommentResponse> subCommentResponses = new ArrayList<>();
 
-        return ResponseEntity.ok(subComments);
+        for (SubComment subComment : subComments) {
+            subCommentResponses.add(new SubCommentResponse(subComment));
+        }
+
+        return ResponseEntity.ok(subCommentResponses);
     }
 
     @PostMapping("/create/{commentId}")
@@ -74,7 +80,7 @@ public class SubCommentController {
 
         SubComment updatedSubComment = subCommentService.update(subComment, request);
 
-        return new ResponseEntity<>(new SubCommentResponse(updatedSubComment), HttpStatus.OK);
+        return ResponseEntity.ok(new SubCommentResponse(updatedSubComment));
     }
 
     @DeleteMapping("/{id}")
