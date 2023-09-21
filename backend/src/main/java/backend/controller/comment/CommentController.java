@@ -1,5 +1,6 @@
 package backend.controller.comment;
 
+import backend.controller.comment.response.CommentResponse;
 import backend.domain.comment.Comment;
 import backend.domain.comment.dto.CommentCreateRequest;
 import backend.domain.comment.dto.CommentUpdateRequest;
@@ -20,6 +21,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import static backend.global.exception.ExceptionCode.UNAUTHORIZED;
 
@@ -32,6 +35,20 @@ public class CommentController {
     private final CommentService commentService;
     private final PostService postService;
     private final MemberService memberService;
+
+    @GetMapping("/{postId}")
+    @Operation(summary = "특정 글 하위의 댓글 조회")
+    public ResponseEntity<List<CommentResponse>> getComments(@PathVariable Long postId) {
+        Post post = postService.findById(postId);
+        List<Comment> comments = post.getComments();
+        List<CommentResponse> commentResponses = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            commentResponses.add(new CommentResponse(comment));
+        }
+
+        return ResponseEntity.ok(commentResponses);
+    }
 
     @PostMapping("/{postId}/create")
     @Operation(summary = "댓글 작성(생성)")
@@ -59,11 +76,12 @@ public class CommentController {
         Member member = memberService.findByUsername(user.getUsername());
         Comment comment = commentService.findById(id);
 
-        validateCommentAndMember(comment, member);
+        isAuthorizedMember(comment, member);
 
         commentService.update(comment, request);
 
-        return ResponseEntity.ok(URI.create("/post/" + comment.getPost().getId()).toString());
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .location(URI.create("/post/" + comment.getPost().getId())).build();
     }
 
     @DeleteMapping("/{id}")
@@ -76,14 +94,14 @@ public class CommentController {
         Member member = memberService.findByUsername(user.getUsername());
         Comment comment = commentService.findById(id);
 
-        validateCommentAndMember(comment, member);
+        isAuthorizedMember(comment, member);
 
         commentService.delete(comment);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
-    private void validateCommentAndMember(Comment comment, Member member) {
+    private void isAuthorizedMember(Comment comment, Member member) {
         if (!comment.getMember().equals(member)) {
             new BadRequestException(UNAUTHORIZED);
         }

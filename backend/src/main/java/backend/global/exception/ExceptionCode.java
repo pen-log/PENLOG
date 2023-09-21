@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ExceptionCode {
 
     UNAUTHORIZED(0000, "권한이 없습니다."),
+    UNCHANGED(0001, "변경 사항이 없습니다."),
 
     MEMBER_NOT_FOUND(1000, "존재하지 않는 회원입니다."),
     MEMBER_USERNAME_ALREADY_EXISTS(1001, "이미 존재하는 회원입니다."),
@@ -17,10 +18,16 @@ public enum ExceptionCode {
 
     COMMENT_NOT_FOUND(3000, "존재하지 않는 댓글입니다."),
 
-    CATEGORY_NOT_FOUND(4000, "존재하지 않는 카테고리입니다."),
+    SUB_COMMENT_NOT_FOUND(4000, "존재하지 않는 대댓글입니다."),
+
+    CATEGORY_NOT_FOUND(5000, "존재하지 않는 카테고리입니다."),
     
-    TAG_NOT_FOUND(5000, "존재하지 않는 태그입니다.");
+    TAG_NOT_FOUND(6000, "존재하지 않는 태그입니다."),
+
+    LIKED_NOT_FOUND(7000, "존재하지 않는 좋아요 정보입니다."),
+    LIKED_DUPLICATE(7001, "좋아요는 게시글 당 한 번만 가능합니다.");
 
     private final int code;
     private final String message;
+
 }

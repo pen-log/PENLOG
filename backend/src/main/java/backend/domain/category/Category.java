@@ -1,7 +1,10 @@
 package backend.domain.category;
 
+import backend.domain.member.Member;
 import backend.domain.post.Post;
+import backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,21 +14,26 @@ import java.util.List;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor(access = PROTECTED)
 @Entity
-public class Category {
+public class Category extends BaseEntity {
 
     @Id
     @GeneratedValue
     @Column(name = "category_id")
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
+
     private String title;
 
     @OneToMany(mappedBy = "category")
     private List<Post> posts = new ArrayList<>();
 
-    public Category(String title) {
+    public Category(Member member, String title) {
+        this.member = member;
         this.title = title;
     }
 

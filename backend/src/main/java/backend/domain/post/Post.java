@@ -5,6 +5,7 @@ import backend.domain.comment.Comment;
 import backend.domain.hashTag.HashTag;
 import backend.domain.member.Member;
 import backend.global.entity.BaseEntity;
+import backend.global.exception.BadRequestException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static backend.global.exception.ExceptionCode.UNCHANGED;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -51,12 +53,20 @@ public class Post extends BaseEntity {
     }
 
     public Post update(String title, String content, Category category, List<HashTag> hashTags) {
+        isUpdated(title, content, category, hashTags);
+
         this.title = title;
         this.content = content;
         this.category = category;
         this.hashTags = hashTags;
         
         return this;
+    }
+
+    private void isUpdated(String title, String content, Category category, List<HashTag> hashTags) {
+        if (title.equals(getTitle()) && content.equals(getContent()) && category.equals(getCategory()) && hashTags.equals(getHashTags())) {
+            throw new BadRequestException(UNCHANGED);
+        }
     }
 
     public void addComment(Comment comment) {
