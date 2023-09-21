@@ -32,6 +32,16 @@ public class LikedService {
         return opLiked.get();
     }
 
+    public Liked findByMemberAndPost(Member member, Post post) {
+        Optional<Liked> opLiked = likedRepository.findByMemberAndPost(member, post);
+
+        if (opLiked.isEmpty()) {
+            throw new BadRequestException(LIKED_NOT_FOUND);
+        }
+
+        return opLiked.get();
+    }
+
     public List<Liked> findByMember(Member member) {
         return likedRepository.findByMember(member);
     }
@@ -50,8 +60,8 @@ public class LikedService {
     }
 
     @Transactional
-    public void deleteById(Long id) {
-        likedRepository.deleteById(id);
+    public void delete(Liked liked) {
+        likedRepository.delete(liked);
     }
 
 }
