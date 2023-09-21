@@ -80,7 +80,8 @@ public class CommentController {
 
         commentService.update(comment, request);
 
-        return ResponseEntity.ok(URI.create("/post/" + comment.getPost().getId()).toString());
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .location(URI.create("/post/" + comment.getPost().getId())).build();
     }
 
     @DeleteMapping("/{id}")
@@ -97,7 +98,7 @@ public class CommentController {
 
         commentService.delete(comment);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     private void isAuthorizedMember(Comment comment, Member member) {
