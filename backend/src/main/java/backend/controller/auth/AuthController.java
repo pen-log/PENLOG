@@ -28,7 +28,7 @@ public class AuthController {
 
     private final MemberService memberService;
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     @Operation(summary = "이메일을 통한 로그인")
     public ResponseEntity<LoginResponse> loginByEmail(@Valid @RequestBody LoginRequest loginRequest) {
         LoginResponse response = memberService.loginByEmail(

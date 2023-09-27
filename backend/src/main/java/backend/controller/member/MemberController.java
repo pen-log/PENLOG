@@ -23,7 +23,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     @Operation(summary = "특정 회원 정보 조회")
     public ResponseEntity<MemberResponse> getMember(@PathVariable Long id) {
         Member member = memberService.findById(id);
