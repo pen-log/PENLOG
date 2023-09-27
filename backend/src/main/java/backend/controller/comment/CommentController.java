@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -103,7 +103,7 @@ public class CommentController {
 
     private void isAuthorizedMember(Comment comment, Member member) {
         if (!comment.getMember().equals(member)) {
-            new BadRequestException(UNAUTHORIZED);
+            throw new BadRequestException(UNAUTHORIZED);
         }
     }
 

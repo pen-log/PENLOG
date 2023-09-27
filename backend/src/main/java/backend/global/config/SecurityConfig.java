@@ -52,12 +52,7 @@ public class SecurityConfig {
                     response.setCharacterEncoding("utf-8");
                     response.setContentType("text/html; charset=UTF-8");
                     response.getWriter().write("인증되지 않은 사용자입니다.");
-                })
-                .and()
-                .addFilterBefore(
-                        new JwtAuthenticationFilter(jwtProvider),
-                        UsernamePasswordAuthenticationFilter.class
-                );
+                });
         return http.build();
     }
 

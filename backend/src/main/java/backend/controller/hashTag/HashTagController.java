@@ -34,9 +34,7 @@ public class HashTagController {
     @PostMapping("/create")
     @Operation(summary = "해시태그 생성")
     public HashTag create(@Valid @RequestBody HashTagCreateRequest request) {
-        HashTag hashTag = hashTagService.create(request);
-
-        return hashTag;
+        return hashTagService.create(request);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
