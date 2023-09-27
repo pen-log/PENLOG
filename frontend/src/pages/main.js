@@ -1,28 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../css/main.module.scss';
-import data from '../dummy/data'
-import { AiOutlineMore, AiOutlineRise } from "react-icons/ai";
-import { BsClock } from "react-icons/bs";
-import { useLocation, useNavigate } from "react-router-dom";
+import { AiOutlineMore, AiOutlineRise, AiOutlineSortAscending } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 function Main() {
     const navigate = useNavigate()
-    const location = useLocation()
+    const [result, setResult] = useState([])
     const [isOpen, setIsOpen] = useState(false);
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     }
+    const [selectedCategory, setSelectedCategory] = useState('블로그');
+    const handleSelect = (a) => {
+        setSelectedCategory(a)
+    }
+    const handleDetail = (a) => {
+        navigate('/detail/' + a)
+    }
+    useEffect(() => {
+        axios.get('http://localhost:3000/data')
+            .then((res) => {
+                if (selectedCategory === '최신') {
+                    res.data.sort((a, b) => {
+                        return new Date(b.period) - new Date(a.period);
+                    });
+                }
+                setResult(res.data);
+            }).catch((err) => {
+                console.log('에러임', err)
+            })
+    }, [selectedCategory])
+
     return (<>
         <div className={styles.category}>
             <div className={styles.category_content}>
-                <li className={location.pathname === '/' ? styles.selected : ""} onClick={() => navigate('/')}><AiOutlineRise /><span>블로그</span></li>
-                <li className={location.pathname === '/recent' ? styles.selected : ""} onClick={() => navigate('/recent')}><BsClock /><span>최신</span></li>
-                <select>
-                    <option value="apple">오늘</option>
-                    <option value="banana">이번주</option>
-                    <option value="orange">이번달</option>
-                    <option value="grape">올해</option>
-                </select>
+                <li className={selectedCategory === '블로그' ? styles.selected : ""}
+                    onClick={() => {
+                        handleSelect('블로그');
+                    }}>
+                    <AiOutlineRise /><span>블로그</span></li>
+                <li className={selectedCategory === '최신' ? styles.selected : ""}
+                    onClick={() => {
+                        handleSelect('최신');
+                    }}><AiOutlineSortAscending /><span>최신</span></li>
             </div>
             <div className={styles.category_more} >
                 <AiOutlineMore className={styles.dropdown_icon} onClick={toggleDropdown} />
@@ -35,17 +56,22 @@ function Main() {
                 </div>
             </div>
         </div >
-        <div className={styles.main_container}>
-            {data.map((a, i) => (
-                <div className={styles.main_item} key={i}>
-                    <div className={styles.main_img}>
-                        <img src="velog.png" onClick={() => navigate('/detail/' + a.title)} />
+        <div className={styles.container}>
+            {result.map((a, i) => (
+                <div className={styles.post} key={i}>
+                    <div className={styles.img}>
+                        <img src="me2.jpg" onClick={() => handleDetail(a.title)} />
                     </div>
-                    <div className={styles.main_info}>
-                        <div className={styles.main_title}>{a.title}</div>
-                        <div className={styles.main_content}>{a.content}</div>
-                        <div className={styles.main_period}>{a.period}</div>
-                        <div className={styles.main_name}><span onClick={() => navigate('/user/' + a.name)}>{a.name}</span></div>
+                    <div className={styles.info}>
+                        <div className={styles.title} onClick={() => handleDetail(a.title)}>{a.title}</div>
+                        <div className={styles.content} onClick={() => handleDetail(a.title)}>{a.content}</div>
+                        <div className={styles.period}>{a.period}</div>
+                        <div className={styles.profile}>
+                            <div className={styles.profile_img}>
+                                <img src='me.jpg' onClick={() => navigate('/user/' + a.name)} />
+                            </div>
+                            <div className={styles.profile_id} onClick={() => navigate('/user/' + a.name)}>{a.name}</div>
+                        </div>
                     </div>
                 </div>
             ))}

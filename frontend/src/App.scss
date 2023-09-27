@@ -1,9 +1,11 @@
-.App {
-  background-color: #F8F9FA;
-  color: black;
+.App,
+body {
+  // background-  color: #F8F9FA;
+  // color: black;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  height: 100vh;
 }
 
 .dark {
@@ -15,6 +17,7 @@
     background-color: black;
     color: white;
   }
+
 }
 
 .light {

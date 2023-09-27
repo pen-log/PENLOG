@@ -2,25 +2,44 @@ import { BsXLg, BsGithub, BsGoogle, BsFacebook } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import styles from '../css/signup.module.scss';
 import { useState } from "react";
-
+import axios from "axios";
 export default function Signup() {
     const navigate = useNavigate()
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [inputs, setInputs] = useState({
+        email: '',
+        password: ''
+    });
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
+    const onChange = (e) => {
+        e.preventDefault();
+        const { name, value } = e.target;
+        setInputs({
+            ...inputs,
+            [name]: value
+        });
     };
+    const handleSubmit = async () => {
+        try {
+            const { data } = await axios.post(
+                'http://localhost:3000/signup',
+                inputs,
+            )
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     axios.post('http://localhost:3000/signup',
+    //         inputs
+    //     )
+    //         .then((res) => {
+    //             console.log('성공', res)
+    //             navigate('/login')
+    //         })
+    // }
     return (
 
         <div className={styles.login_container}>
@@ -38,8 +57,9 @@ export default function Signup() {
                         <h2>회원가입</h2 >
                         <h4> 이메일로 회원가입</h4 >
                         <div className={styles.login_content_email}>
-                            <form className={styles.login_form} >
-                                <input type='email' placeholder='이메일을 입력하세요' />
+                            <form className={styles.login_form} onSubmit={handleSubmit}>
+                                <input name="email" placeholder="이메일" onChange={onChange} />
+                                <input name="password" placeholder="비밀번호" onChange={onChange} />
                                 <button type="submit">로그인</button>
                             </form >
                         </div >
