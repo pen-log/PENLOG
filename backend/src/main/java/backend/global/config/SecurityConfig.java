@@ -1,9 +1,8 @@
 package backend.global.config;
 
-import backend.global.config.jwt.JwtProvider;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,13 +13,11 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-    private final JwtProvider jwtProvider;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -37,20 +34,7 @@ public class SecurityConfig {
                         .anyRequest().permitAll()) // TODO : 개발 중에만 유지
                 .formLogin(formLogin -> formLogin.loginPage("/usr/login"))
                 .oauth2Login(oauth2Login -> oauth2Login.loginPage("/usr/login"))
-                .logout(logout -> logout.logoutUrl("/logout"))
-                .exceptionHandling()
-                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    response.setStatus(403);
-                    response.setCharacterEncoding("utf-8");
-                    response.setContentType("text/html; charset=UTF-8");
-                    response.getWriter().write("권한이 없는 사용자입니다.");
-                })
-                .authenticationEntryPoint((request, response, authException) -> {
-                    response.setStatus(401);
-                    response.setCharacterEncoding("utf-8");
-                    response.setContentType("text/html; charset=UTF-8");
-                    response.getWriter().write("인증되지 않은 사용자입니다.");
-                });
+                .logout(logout -> logout.logoutUrl("/logout"));
         return http.build();
     }
 
