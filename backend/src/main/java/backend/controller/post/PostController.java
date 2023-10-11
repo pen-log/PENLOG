@@ -12,6 +12,7 @@ import backend.domain.post.dto.PostCreateRequest;
 import backend.domain.post.dto.PostUpdateRequest;
 import backend.domain.post.service.PostService;
 import backend.global.exception.BadRequestException;
+import backend.global.rq.Rq;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -37,6 +38,7 @@ public class PostController {
     private final MemberService memberService;
     private final CategoryService categoryService;
     private final HashTagService hashTagService;
+    private final Rq rq;
 
     @GetMapping("/{id}")
     @Operation(summary = "특정 글 조회")
@@ -48,15 +50,21 @@ public class PostController {
 
     @PostMapping("/create")
     @Operation(summary = "글 작성(생성)")
-    public ResponseEntity<String> create(@Valid @RequestBody PostCreateRequest request, @AuthenticationPrincipal User user) {
-        Member member = memberService.findByUsername(user.getUsername());
+    public ResponseEntity<String> create(@Valid @RequestBody PostCreateRequest request) {
+        Member member = rq.getMember();
         String title = request.getTitle();
         String content = request.getContent();
-        Category category = categoryService.findByMemberAndId(member, request.getCategoryId());
-        List<HashTag> hashTags = new ArrayList<>();
+        Category category = null;
+        List<HashTag> hashTags = null;
 
-        for (String tagName : request.getTags()) {
-            hashTags.add(hashTagService.findByName(tagName));
+        if (request.getCategoryId() != null) {
+            category = categoryService.findByMemberAndId(member, request.getCategoryId());
+        }
+
+        if (request.getTags() != null) {
+            for (String tagName : request.getTags()) {
+                hashTags.add(hashTagService.findByName(tagName));
+            }
         }
 
         Long postId = postService.save(new Post(member, title, content, category, hashTags));

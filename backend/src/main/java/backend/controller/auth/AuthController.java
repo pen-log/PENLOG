@@ -35,12 +35,6 @@ public class AuthController {
                 loginRequest.getUsername(),
                 loginRequest.getPassword()
         );
-
-        Member member = memberService.findByUsername(loginRequest.getUsername());
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(member.getUsername(), member.getPassword(), member.getGrantedAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
         return ResponseEntity.ok(response);
     }
 
