@@ -118,10 +118,10 @@ public class Member {
     public List<? extends GrantedAuthority> getGrantedAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         if (isAdmin()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
         return grantedAuthorities;

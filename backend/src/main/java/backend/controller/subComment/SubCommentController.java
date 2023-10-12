@@ -35,8 +35,8 @@ public class SubCommentController {
     private final MemberService memberService;
     private final CommentService commentService;
 
-    @GetMapping("/{commentId}")
     @Operation(summary = "특정 댓글 하위의 대댓글 조회")
+    @GetMapping("/{commentId}")
     public ResponseEntity<List<SubCommentResponse>> getSubComments(@PathVariable Long commentId) {
         Comment comment = commentService.findById(commentId);
         List<SubComment> subComments = subCommentService.findByComment(comment);
@@ -49,8 +49,8 @@ public class SubCommentController {
         return ResponseEntity.ok(subCommentResponses);
     }
 
-    @PostMapping("/create/{commentId}")
     @Operation(summary = "대댓글 작성(생성)")
+    @PostMapping("/create/{commentId}")
     public ResponseEntity<SubCommentResponse> create(
             @Valid @RequestBody SubCommentCreateRequest request,
             @AuthenticationPrincipal User user,
@@ -65,8 +65,8 @@ public class SubCommentController {
         return new ResponseEntity<>(new SubCommentResponse(subComment), HttpStatus.CREATED);
     }
 
-    @PostMapping("/update/{id}")
     @Operation(summary = "대댓글 수정")
+    @PostMapping("/update/{id}")
     public ResponseEntity<SubCommentResponse> update(
             @Valid @RequestBody SubCommentUpdateRequest request,
             @AuthenticationPrincipal User user,
@@ -83,8 +83,8 @@ public class SubCommentController {
         return ResponseEntity.ok(new SubCommentResponse(updatedSubComment));
     }
 
-    @DeleteMapping("/{id}")
     @Operation(summary = "대댓글 삭제")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id, @AuthenticationPrincipal User user) {
         SubComment subComment = subCommentService.findById(id);
         Member member = memberService.findByUsername(user.getUsername());

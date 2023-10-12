@@ -9,15 +9,13 @@ import lombok.Getter;
 public class LoginResponse {
 
     private Long id;
-
     private String username;
+    private String nickname;
 
-    private String token;
-
-    public LoginResponse(Member member, String token) {
+    public LoginResponse(Member member) {
         this.id = member.getId();
         this.username = member.getUsername();
-        this.token = token;
+        this.nickname = member.getNickname();
     }
 
 }
