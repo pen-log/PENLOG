@@ -12,7 +12,6 @@ import backend.domain.post.dto.PostCreateRequest;
 import backend.domain.post.dto.PostUpdateRequest;
 import backend.domain.post.service.PostService;
 import backend.global.exception.BadRequestException;
-import backend.global.rq.Rq;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -38,7 +37,6 @@ public class PostController {
     private final MemberService memberService;
     private final CategoryService categoryService;
     private final HashTagService hashTagService;
-    private final Rq rq;
 
     @Operation(summary = "특정 글 조회")
     @GetMapping("/{id}")
