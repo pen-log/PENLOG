@@ -28,8 +28,8 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final MemberService memberService;
 
-    @GetMapping("")
     @Operation(summary = "특정 회원의 카테고리 목록 조회")
+    @GetMapping("")
     public ResponseEntity<List<CategoryResponse>> getCategories(@AuthenticationPrincipal User user) {
         List<Category> categories = categoryService
                 .findByMember(memberService.findByUsername(user.getUsername()));
@@ -43,8 +43,8 @@ public class CategoryController {
         return ResponseEntity.ok(categoryResponses);
     }
 
-    @PostMapping("/create")
     @Operation(summary = "카테고리 생성")
+    @PostMapping("/create")
     public ResponseEntity<String> create(
             @Valid @RequestBody CategoryRequest request,
             @AuthenticationPrincipal User user
@@ -57,8 +57,8 @@ public class CategoryController {
         return ResponseEntity.created(URI.create("/category")).build();
     }
 
-    @DeleteMapping("/{id}")
     @Operation(summary = "카테고리 삭제")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id, @AuthenticationPrincipal User user) {
         Member member = memberService.findByUsername(user.getUsername());
         Category category = categoryService.findByMemberAndId(member, id);
