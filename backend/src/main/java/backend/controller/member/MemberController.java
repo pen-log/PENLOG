@@ -23,16 +23,16 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/get/{id}")
     @Operation(summary = "특정 회원 정보 조회")
+    @GetMapping("/get/{id}")
     public ResponseEntity<MemberResponse> getMember(@PathVariable Long id) {
         Member member = memberService.findById(id);
 
         return ResponseEntity.ok(new MemberResponse(member));
     }
 
-    @PostMapping("/update")
     @Operation(summary = "회원 정보 업데이트 - 비밀번호, 닉네임")
+    @PostMapping("/update")
     public ResponseEntity<MemberResponse> updatePasswordAndNickname(
             @Valid @RequestBody MemberUpdateRequest request,
             @AuthenticationPrincipal User user
@@ -45,8 +45,8 @@ public class MemberController {
         return ResponseEntity.ok(new MemberResponse(updatedMember));
     }
 
-    @PostMapping("/update/email")
     @Operation(summary = "회원 정보 업데이트 - 이메일")
+    @PostMapping("/update/email")
     public ResponseEntity<MemberResponse> updateEmail(
             @Valid @RequestBody MemberEmailRequest request,
             @AuthenticationPrincipal User user
@@ -59,8 +59,8 @@ public class MemberController {
         return ResponseEntity.ok(new MemberResponse(updatedMember));
     }
 
-    @PostMapping("/update/title")
     @Operation(summary = "회원 정보 업데이트 - 블로그 제목")
+    @PostMapping("/update/title")
     public ResponseEntity<MemberResponse> updateTitle(
             @Valid @RequestBody MemberTitleRequest request,
             @AuthenticationPrincipal User user
