@@ -36,8 +36,8 @@ public class CommentController {
     private final PostService postService;
     private final MemberService memberService;
 
-    @GetMapping("/{postId}")
     @Operation(summary = "특정 글 하위의 댓글 조회")
+    @GetMapping("/{postId}")
     public ResponseEntity<List<CommentResponse>> getComments(@PathVariable Long postId) {
         Post post = postService.findById(postId);
         List<Comment> comments = post.getComments();
@@ -50,8 +50,8 @@ public class CommentController {
         return ResponseEntity.ok(commentResponses);
     }
 
-    @PostMapping("/{postId}/create")
     @Operation(summary = "댓글 작성(생성)")
+    @PostMapping("/{postId}/create")
     public ResponseEntity<String> create(
             @PathVariable Long postId,
             @Valid @RequestBody CommentCreateRequest request,
@@ -65,8 +65,8 @@ public class CommentController {
         return ResponseEntity.created(URI.create("/post/" + post.getId())).build();
     }
 
-    @PostMapping("/update/{id}")
     @Operation(summary = "댓글 수정")
+    @PostMapping("/update/{id}")
     public ResponseEntity<String> update(
             @PathVariable Long id,
             @Valid @RequestBody CommentUpdateRequest request,
@@ -80,12 +80,12 @@ public class CommentController {
 
         commentService.update(comment, request);
 
-        return ResponseEntity.status(HttpStatus.FOUND)
+        return ResponseEntity.status(HttpStatus.OK)
                 .location(URI.create("/post/" + comment.getPost().getId())).build();
     }
 
-    @DeleteMapping("/{id}")
     @Operation(summary = "댓글 삭제")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @PathVariable Long id,
             @AuthenticationPrincipal User user
