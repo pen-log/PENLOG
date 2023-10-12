@@ -6,9 +6,6 @@ import backend.domain.member.Member;
 import backend.domain.member.repository.MemberRepository;
 import backend.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,9 +71,6 @@ public class MemberService {
         if (!passwordEncoder.matches(password, member.getPassword())) {
             throw new BadRequestException(MEMBER_PASSWORD_DO_NOT_MATCH);
         }
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(member.getUsername(), member.getPassword(), member.getGrantedAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return new LoginResponse(member);
     }
